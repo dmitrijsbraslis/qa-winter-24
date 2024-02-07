@@ -13,6 +13,7 @@ public class BaseFunc {
     private WebDriverWait wait;
 
     public BaseFunc() {
+        //Some changes here
         browser = new ChromeDriver();
         browser.manage().window().maximize();
 
