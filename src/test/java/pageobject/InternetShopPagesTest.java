@@ -2,6 +2,7 @@ package pageobject;
 
 import org.junit.jupiter.api.Test;
 import pageobject.pages.HomePage;
+import pageobject.pages.SubcategoriesPage;
 
 public class InternetShopPagesTest {
     @Test
@@ -11,6 +12,9 @@ public class InternetShopPagesTest {
 
         HomePage homePage = new HomePage(baseFunc);
         homePage.acceptCookies();
-//        homePage.selectMenuItem("Instrumenti");
+        homePage.selectMenuItem("Mēbeles");
+
+        SubcategoriesPage subcategoriesPage = new SubcategoriesPage(baseFunc);
+        subcategoriesPage.selectSubcategory("Guļamistaba");
     }
 }
