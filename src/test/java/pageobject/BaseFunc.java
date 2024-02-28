@@ -1,9 +1,6 @@
 package pageobject;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -14,8 +11,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class BaseFunc {
-    private WebDriver browser;
+    private WebDriver browser; //null
     private WebDriverWait wait;
+    private JavascriptExecutor executor;
 
     public BaseFunc() {
         ChromeOptions options = new ChromeOptions();
@@ -26,6 +24,7 @@ public class BaseFunc {
         browser.manage().window().maximize();
 
         wait = new WebDriverWait(browser, Duration.ofSeconds(5));
+        executor = (JavascriptExecutor) browser;
     }
 
     public void openURL(String url) {
@@ -40,6 +39,15 @@ public class BaseFunc {
         wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
     }
 
+    public void hardClick(WebElement we) {
+        try {
+            we.click();
+        } catch (ElementClickInterceptedException e) {
+            System.out.println("Cant's perform click by Selenium");
+            executor.executeScript("arguments[0].click();", we);
+        }
+    }
+
     public WebElement findElement(By locator) {
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
@@ -49,8 +57,21 @@ public class BaseFunc {
     }
 
     public void scrollToElement(WebElement we) {
-        JavascriptExecutor executor = (JavascriptExecutor) browser;
         executor.executeScript("arguments[0].scrollIntoView(true);", we);
         executor.executeScript("window.scrollBy(0, 500);");
+    }
+
+    public void waitForText(By locator, String text) {
+        wait.until(ExpectedConditions.textToBe(locator, text));
+    }
+
+    public void typeText(By locator, String text) {
+        WebElement input = findElement(locator);
+        input.clear();
+        input.sendKeys(text);
+    }
+
+    public void pressEnter(By locator) {
+        findElement(locator).sendKeys(Keys.ENTER);
     }
 }

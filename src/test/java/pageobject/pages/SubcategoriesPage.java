@@ -6,6 +6,7 @@ import pageobject.BaseFunc;
 
 public class SubcategoriesPage {
     private final By SUBCATEGORY_NAME = By.xpath(".//span[@class = 'cat-title']");
+    private final By SUBCATEGORY_PAGE_TITLE = By.tagName("h1");
     private BaseFunc baseFunc;
 
     public SubcategoriesPage(BaseFunc baseFunc) {
@@ -17,9 +18,11 @@ public class SubcategoriesPage {
         for (WebElement we : baseFunc.findElements(SUBCATEGORY_NAME)) {
             if (we.getText().equals(subcategoryName)) {
                 baseFunc.scrollToElement(we);
-                we.click();
+                baseFunc.hardClick(we);
                 break;
             }
         }
+
+        baseFunc.waitForText(SUBCATEGORY_PAGE_TITLE, subcategoryName);
     }
 }

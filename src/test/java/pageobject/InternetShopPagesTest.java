@@ -1,6 +1,7 @@
 package pageobject;
 
 import org.junit.jupiter.api.Test;
+import pageobject.pages.CatalogPage;
 import pageobject.pages.HomePage;
 import pageobject.pages.SubcategoriesPage;
 
@@ -16,5 +17,9 @@ public class InternetShopPagesTest {
 
         SubcategoriesPage subcategoriesPage = new SubcategoriesPage(baseFunc);
         subcategoriesPage.selectSubcategory("Guļamistaba");
+        subcategoriesPage.selectSubcategory("Plaukti");
+
+        CatalogPage catalogPage = new CatalogPage(baseFunc);
+        catalogPage.setPriceFilter(25, 100);
     }
 }
