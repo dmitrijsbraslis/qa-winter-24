@@ -71,6 +71,16 @@ public class BaseFunc {
         input.sendKeys(text);
     }
 
+    public void typeTextInCustomField(By locator, String text) {
+        WebElement input = findElement(locator);
+        hardClick(input);
+
+        input.sendKeys(Keys.CONTROL + "a");
+        input.sendKeys(Keys.DELETE);
+
+        input.sendKeys(text);
+    }
+
     public void pressEnter(By locator) {
         findElement(locator).sendKeys(Keys.ENTER);
     }
