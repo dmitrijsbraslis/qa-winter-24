@@ -1,5 +1,7 @@
 package pageobject.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import pageobject.BaseFunc;
@@ -16,9 +18,11 @@ public class CatalogPage {
     private final By DISCOUNT_PRICE = By.xpath(".//span[contains(@class, 'price-number')]");
     private final By REGULAR_PRICE = By.xpath(".//span[contains(@class, 'price__item-price')]/span[1]");
 
+    private final Logger LOGGER = LogManager.getLogger(this.getClass());
     private BaseFunc baseFunc;
 
     public CatalogPage(BaseFunc baseFunc) {
+        LOGGER.info("We are on catalog page");
         this.baseFunc = baseFunc;
     }
 
@@ -26,11 +30,13 @@ public class CatalogPage {
         String priceFromAsText = String.valueOf(priceFrom.intValue());
         String priceToAsText = String.valueOf(priceTo.intValue());
 
+        LOGGER.info("Set start price from " + priceFromAsText);
         baseFunc.typeTextInCustomField(PRICE_FROM, priceFromAsText);
         baseFunc.pressEnter(PRICE_FROM);
 
         baseFunc.waitForContainingText(FILTER_VALUE, "€ no " + priceFromAsText);
 
+        LOGGER.info("Filter items by price cheaper than " + priceToAsText);
         baseFunc.typeTextInCustomField(PRICE_TO, priceToAsText);
         baseFunc.pressEnter(PRICE_TO);
 
@@ -38,6 +44,7 @@ public class CatalogPage {
     }
 
     public List<Double> getAllActualPrices() {
+        LOGGER.info("Getting all actual prices from catalog");
         List<WebElement> products = baseFunc.findElements(CATALOG_ITEM);
 
         List<Double> actualPrices = new ArrayList<>();
