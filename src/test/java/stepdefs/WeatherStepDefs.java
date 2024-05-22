@@ -8,6 +8,7 @@ import model.WeatherResponse;
 import org.junit.jupiter.api.Assertions;
 import requesters.WeatherRequester;
 
+import java.util.List;
 import java.util.Map;
 
 public class WeatherStepDefs {
@@ -41,5 +42,19 @@ public class WeatherStepDefs {
     public void hourly_units_check(Map<String, String> params) {
         Assertions.assertEquals(params.get("time"), response.getHourlyUnits().getTime());
         Assertions.assertEquals(params.get("temperature_2m"), response.getHourlyUnits().getTemperature2m());
+    }
+
+    @Then("hourly list is:")
+    public void hourly_list_check(List<String> hourly) {
+        for (int i = 0; i < hourly.size(); i++) {
+            Assertions.assertEquals(hourly.get(i), response.getHourly().getTimes().get(i), "Incorrect hourly time for element Nr. " + i);
+        }
+    }
+
+    @Then("2m temperatures are:")
+    public void temp_2m_check(List<Double> temps) {
+        for (int i = 0; i < temps.size(); i++) {
+            Assertions.assertEquals(temps.get(i), response.getHourly().getTemperature2m().get(i), "Incorrect temp for Nr. " + i);
+        }
     }
 }
