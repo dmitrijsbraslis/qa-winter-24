@@ -5,11 +5,12 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import model.WeatherResponse;
-import org.junit.jupiter.api.Assertions;
 import requesters.WeatherRequester;
 
 import java.util.List;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WeatherStepDefs {
     private Double lat;
@@ -30,31 +31,31 @@ public class WeatherStepDefs {
 
     @Then("timezone is set as {string}")
     public void timezone_check(String timezone) {
-        Assertions.assertEquals(timezone, response.getTimezone(), "Wrong timezone!");
+        assertEquals(timezone, response.getTimezone(), "Wrong timezone!");
     }
 
     @Then("elevation is {int}")
     public void elevation_check(int elevation) {
-        Assertions.assertEquals(elevation, response.getElevation(), "Wrong elevation!");
+        assertEquals(elevation, response.getElevation(), "Wrong elevation!");
     }
 
     @Then("hourly units are:")
     public void hourly_units_check(Map<String, String> params) {
-        Assertions.assertEquals(params.get("time"), response.getHourlyUnits().getTime());
-        Assertions.assertEquals(params.get("temperature_2m"), response.getHourlyUnits().getTemperature2m());
+        assertEquals(params.get("time"), response.getHourlyUnits().getTime());
+        assertEquals(params.get("temperature_2m"), response.getHourlyUnits().getTemperature2m());
     }
 
     @Then("hourly list is:")
     public void hourly_list_check(List<String> hourly) {
         for (int i = 0; i < hourly.size(); i++) {
-            Assertions.assertEquals(hourly.get(i), response.getHourly().getTimes().get(i), "Incorrect hourly time for element Nr. " + i);
+            assertEquals(hourly.get(i), response.getHourly().getTimes().get(i), "Incorrect hourly time for element Nr. " + i);
         }
     }
 
     @Then("2m temperatures are:")
     public void temp_2m_check(List<Double> temps) {
         for (int i = 0; i < temps.size(); i++) {
-            Assertions.assertEquals(temps.get(i), response.getHourly().getTemperature2m().get(i), "Incorrect temp for Nr. " + i);
+            assertEquals(temps.get(i), response.getHourly().getTemperature2m().get(i), "Incorrect temp for Nr. " + i);
         }
     }
 }

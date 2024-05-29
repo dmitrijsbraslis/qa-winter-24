@@ -22,9 +22,10 @@ public class HomePage {
         this.baseFunc = baseFunc;
     }
 
-    public void acceptCookies() {
+    public HomePage acceptCookies() {
         LOGGER.info("Accepting cookies");
         baseFunc.click(ACCEPT_COOKIES_BTN);
+        return this;
     }
 
     public void selectMenuItem(String menuItemName) {
@@ -44,8 +45,9 @@ public class HomePage {
         Assertions.assertTrue(isSectionFound, "Can't find menu item " + menuItemName);
     }
 
-    public void openLoginPage() {
+    public LoginPage openLoginPage() {
         LOGGER.info("Opening Login Page");
         baseFunc.click(REGISTRATION_BTN);
+        return new LoginPage(baseFunc);
     }
 }

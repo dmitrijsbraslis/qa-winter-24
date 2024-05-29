@@ -1,5 +1,6 @@
 package pageobject.pages;
 
+import model.User;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import pageobject.BaseFunc;
@@ -18,5 +19,11 @@ public class RegistrationPage {
         baseFunc.typeText(FIRST_NAME_INPUT, firstName);
         baseFunc.typeText(LAST_NAME_INPUT, lastName);
         baseFunc.typeText(EMAIL_INPUT, email);
+    }
+
+    public void fillInRegistrationForm(User user) {
+        baseFunc.typeText(FIRST_NAME_INPUT, user.getFirstName());
+        baseFunc.typeText(LAST_NAME_INPUT, user.getLastName());
+        baseFunc.typeText(EMAIL_INPUT, user.getEmail());
     }
 }
